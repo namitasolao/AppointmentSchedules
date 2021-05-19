@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="homeViewModel"
+            type="com.namita.mynotepad.homepage.HomeViewModel"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginBottom="100dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/add_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/dataText"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                tools:text ="hgh"
+                android:text="@{homeViewModel.appointments.apptDate.toString()}"
+                />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/add_button"
+            style="@style/buttonStyle"
+            android:text="@string/addText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
