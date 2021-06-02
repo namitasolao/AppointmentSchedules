@@ -21,5 +21,9 @@ interface AppointmentsDAO {
     suspend fun getAppt() : Appointments?
 
     @Query("Select * from appointments_tab order by apptid desc")
-    fun getAllAppt() : LiveData<List<Appointments?>>
+    suspend fun getAllAppt() : List<Appointments>
+
+    @Query("Select count(1) from appointments_tab ")
+    suspend fun getCount() : Int
+
 }

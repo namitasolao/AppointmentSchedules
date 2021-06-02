@@ -18,16 +18,36 @@ class ApptViewModel(
         date: String,
         time: String,
         description: String
-    ){
-         viewModelScope.launch {
-             val newappt = Appointments(
-                 apptDate = date,
-                 apptTime = time,
-                 details = description
-             )
+    ) :Boolean {
+        val isValid = validateData(
+            date, time, description
+        )
 
-             database.insert(newappt)
-         }
+        if(isValid) {
+            viewModelScope.launch {
+                val newappt = Appointments(
+                    apptDate = date,
+                    apptTime = time,
+                    details = description
+                )
+
+                database.insert(newappt)
+            }
+        }
+
+        return isValid
+    }
+
+    private fun validateData(
+        date: String,
+        time: String,
+        description: String
+    ) : Boolean {
+
+        if(date.isEmpty() || time.isEmpty() || description.isEmpty())
+            return false
+
+        return true
     }
 
 

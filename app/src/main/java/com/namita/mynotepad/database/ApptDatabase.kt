@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 
 @Database(entities = [Appointments::class] , version = 1,exportSchema = false)
 @TypeConverters(Converters::class)
-
 public abstract class ApptDatabase : RoomDatabase(){
 
     abstract val appointmentsDAO : AppointmentsDAO

@@ -12,26 +12,40 @@ import kotlinx.coroutines.launch
 class HomeViewModel(val database : AppointmentsDAO,
                     application: Application) :AndroidViewModel(application) {
 
-    private val _appointments = MutableLiveData<Appointments?>()
+    //val allAppointments = database.getAllAppt()
 
-    val appointments : LiveData<Appointments?>
+    private val _appointments = MutableLiveData<List<Appointments>>()
+
+    val appointments : LiveData<List<Appointments>>
         get() = _appointments
 
-    init{
-        initializeAppointments()
-    }
+//    init{
+//        initializeAppointments()
+//    }
 
-    private fun initializeAppointments(){
+    fun initializeAppointments(){
         viewModelScope.launch {
             _appointments.value = getAppointmentsFromDatabase()
         }
     }
 
-    private suspend fun getAppointmentsFromDatabase(): Appointments? {
-        return database.getAppt()
+    private suspend fun getAppointmentsFromDatabase(): List<Appointments> {
+        return database.getAllAppt()
     }
 
 //     appointments.value = getAppointmentsFromDatabase()
 
+    fun onDelete(){
+        viewModelScope.launch {
+            database.delete()
+        }
+    }
 
+    fun rowsExist() : Int{
+        var count = 0
+        viewModelScope.launch {
+             count = database.getCount()
+        }
+        return count
+    }
 }

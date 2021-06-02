@@ -15,35 +15,37 @@
         android:layout_height="match_parent"
         >
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appt_list"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginEnd="41dp"
-            android:layout_marginBottom="100dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/add_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/dataText"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                tools:text ="hgh"
-                android:text="@{homeViewModel.appointments.apptDate.toString()}"
-                />
-        </ScrollView>
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/add_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/add_button"
             style="@style/buttonStyle"
+            android:layout_marginStart="24dp"
             android:text="@string/addText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.229"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.887" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="Delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/add_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.887" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

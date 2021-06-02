@@ -16,27 +16,30 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:id="@+id/date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Date"
+            android:hint="Enter the appointment date"
             android:inputType="date"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.678"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.19999999" />
+            app:layout_constraintVertical_bias="0.208" />
 
-        <EditText
+        <TextView
             android:id="@+id/time_text"
             android:layout_width="181dp"
             android:layout_height="wrap_content"
-            android:hint="Time"
+            android:hint="Enter the appointment time"
             android:inputType="time"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/scrollView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.456"
+            app:layout_constraintHorizontal_bias="0.46"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_text"
             app:layout_constraintVertical_bias="0.47000003" />
@@ -47,7 +50,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/ok_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/time_text">
 
@@ -55,7 +58,8 @@
                 android:id="@+id/detailsText"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="Details" />
+                android:hint="Enter the details"
+                android:textSize="20sp" />
 
         </ScrollView>
 
@@ -64,11 +68,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/okText"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+        <TextView
+            android:id="@+id/date_field"
+            style="@style/fieldStyle"
+            android:text="@string/dateField"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/date_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.207" />
+
+        <TextView
+            android:id="@+id/time_field"
+            style="@style/fieldStyle"
+            android:text="@string/timeField"
+            app:layout_constraintBottom_toTopOf="@+id/details_field"
+            app:layout_constraintEnd_toStartOf="@+id/time_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_field" />
+
+        <TextView
+            android:id="@+id/details_field"
+            android:text="@string/detailsField"
+            style="@style/fieldStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+            app:layout_constraintHorizontal_bias="0.625"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_field"
+            app:layout_constraintVertical_bias="0.48" />
         <!--        android:onClick="@{()->apptPage.onAdd()}"-->
 <!--        android:text="@string/okText" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>

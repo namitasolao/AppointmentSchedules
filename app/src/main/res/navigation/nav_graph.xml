@@ -19,7 +19,18 @@
         android:name="com.namita.mynotepad.apptpage.ApptPageFragment"
         android:label="ApptPageFragment" >
         <action
-            android:id="@+id/action_apptPageFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_apptPageFragment_to_timePickerFragment"
+            app:destination="@id/timePickerFragment" />
+        <action
+            android:id="@+id/action_apptPageFragment_to_datePickerFragment"
+            app:destination="@id/datePickerFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/timePickerFragment"
+        android:name="com.namita.mynotepad.apptpage.TimePickerFragment"
+        android:label="TimePickerFragment" />
+    <dialog
+        android:id="@+id/datePickerFragment"
+        android:name="com.namita.mynotepad.apptpage.DatePickerFragment"
+        android:label="DatePickerFragment" />
 </navigation>
