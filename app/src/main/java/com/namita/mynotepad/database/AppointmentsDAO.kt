@@ -14,6 +14,9 @@ interface AppointmentsDAO {
     @Query("Delete from appointments_tab" )
     suspend fun delete()
 
+    @Query("DELETE FROM appointments_tab WHERE apptid = (:apptId)" )
+    suspend fun deleteAppointment(apptId: Int)
+
 //    @Query("Select * from appointments_tab where apptid = (:apptId)")
 //    suspend fun getAppt(apptId: Int) : Appointments
 
@@ -25,5 +28,8 @@ interface AppointmentsDAO {
 
     @Query("Select count(1) from appointments_tab ")
     suspend fun getCount() : Int
+
+    @Query("Delete from appointments_tab where apptid = (:apptid) ")
+    suspend fun deleteSelected(apptid : Int) : Int
 
 }

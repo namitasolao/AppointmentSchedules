@@ -1,6 +1,7 @@
 package com.namita.mynotepad.homepage
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -66,10 +67,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.deleteButton.setOnClickListener {
             homeViewModel.onDelete()
             //deleteButtonStatus()
-            homeViewModel.initializeAppointments()
+            Handler().postDelayed({homeViewModel.initializeAppointments()}, 500L)
+
         }
 
-        val adapter = AppointmentAdapter()
+        val adapter = AppointmentAdapter(homeViewModel.checkedAppointmentId)
         binding.apptList.adapter = adapter
 
         homeViewModel.appointments.observe(viewLifecycleOwner, Observer {

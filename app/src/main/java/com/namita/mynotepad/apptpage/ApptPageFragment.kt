@@ -1,6 +1,7 @@
 package com.namita.mynotepad.apptpage
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,20 +15,27 @@ import androidx.navigation.fragment.findNavController
 import com.namita.mynotepad.R
 import com.namita.mynotepad.database.ApptDatabase
 import com.namita.mynotepad.databinding.FragmentApptPageBinding
+import java.sql.Time
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 const val TIME_REQUEST_KEY = "TIME_REQUEST_KEY"
 const val DATE_REQUEST_KEY = "DATE_REQUEST_KEY"
+const val DATE_FORMAT = "yyyy-MMM-dd"
+const val TIME_FORMAT = "hh:mm"
 
 class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
 
     private lateinit var binding: FragmentApptPageBinding
 
+    private var selectedDate: Long? = null
+    private var selectedTime: Long? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         //FragmentApptPageBinding is automatically created
         binding = DataBindingUtil.inflate(
@@ -56,16 +64,17 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
             }
             okButton.setOnClickListener {
                 val isSuccessful = apptPage?.onAdd(
-                    dateText.text.toString(),
-                    timeText.text.toString(),
+                    selectedDate,
+                    //Date(dateText.text),
+                    selectedTime,
                     detailsText.text.toString()
-                ) ?: false
+                ) ?: null
 
-                if(isSuccessful) {
+                if(isSuccessful.isNullOrEmpty()) {
                     //Navigation.findNavController(it).navigate(R.id.action_apptPageFragment_to_homeFragment)
                     findNavController().navigateUp()
                 } else{
-                    Toast.makeText(it.context, "Enter the value!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(it.context, isSuccessful, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -80,13 +89,15 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
         // Step 1. Listen for fragment results
         setFragmentResultListener(TIME_REQUEST_KEY) { key, bundle ->
             bundle["time"]?.let {
-                binding.timeText.text = it.toString()
+                selectedTime = it as Long
+                binding.timeText.text =DateFormat.format(TIME_FORMAT, Date(it))
             }
         }
 
         setFragmentResultListener(DATE_REQUEST_KEY) { key, bundle ->
             bundle["date"]?.let {
-                binding.dateText.text = it.toString()
+                selectedDate = it as Long
+                binding.dateText.text = DateFormat.format(DATE_FORMAT, Date(it))
             }
         }
 

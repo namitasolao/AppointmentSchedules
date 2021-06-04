@@ -7,7 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.namita.mynotepad.database.Appointments
 import com.namita.mynotepad.database.AppointmentsDAO
 import kotlinx.coroutines.launch
+import java.sql.Time
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+import java.time.LocalDate as LocalDate
 
 class ApptViewModel(
     val database : AppointmentsDAO ,
@@ -15,39 +21,52 @@ class ApptViewModel(
 ) : AndroidViewModel(application) {
 
     fun onAdd(
-        date: String,
-        time: String,
+        date: Long?,
+        time: Long?,
         description: String
-    ) :Boolean {
-        val isValid = validateData(
-            date, time, description
-        )
+    ) : String? {
+        var isValid = validateData(date,time, description)
+        var outputStr : String? = null
 
         if(isValid) {
-            viewModelScope.launch {
-                val newappt = Appointments(
-                    apptDate = date,
-                    apptTime = time,
-                    details = description
-                )
+            isValid = validateDate(date!!)
+            if (isValid) {
 
-                database.insert(newappt)
+                viewModelScope.launch {
+                    val newappt = Appointments(
+                        apptDate = Date(date!!),
+                        apptTime = Time(time!!),
+                        details = description
+                    )
+
+                    database.insert(newappt)
+                }
             }
+            else {
+                outputStr = "Enter the valid date!"
+            }
+        } else {
+            outputStr = "Enter all values!"
         }
 
-        return isValid
+
+        return outputStr
     }
 
     private fun validateData(
-        date: String,
-        time: String,
+        date : Long?,
+        time: Long?,
         description: String
     ) : Boolean {
 
-        if(date.isEmpty() || time.isEmpty() || description.isEmpty())
+        if(date == null || time == null || description.isEmpty())
             return false
 
         return true
+    }
+
+    private fun validateDate( date : Long) : Boolean{
+        return ((date) >= System.currentTimeMillis())
     }
 
 

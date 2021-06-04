@@ -2,14 +2,18 @@ package com.namita.mynotepad.homepage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 //import com.namita.mynotepad.TextItemViewHolder
 import com.namita.mynotepad.database.Appointments
 import com.namita.mynotepad.databinding.ListItemAppointmentBinding
+import com.namita.mynotepad.databinding.ListItemBinding
 
-class AppointmentAdapter : ListAdapter<Appointments,AppointmentAdapter.ViewHolder>(AppointmentsDiffCallback()) {
+class AppointmentAdapter(
+    private val checkedApptId: MutableLiveData<Int>
+) : ListAdapter<Appointments,AppointmentAdapter.ViewHolder>(AppointmentsDiffCallback()) {
 //    var data = listOf<Appointments>()
 //    set(value) {
 //        field = value
@@ -21,16 +25,11 @@ class AppointmentAdapter : ListAdapter<Appointments,AppointmentAdapter.ViewHolde
 //    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent, checkedApptId)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        //val item = data[position]
-
-        //holder.textView.text = item.details.toString()
-
-        //val res = holder.itemView.context.resources
         holder.bind(item)
 
     }
@@ -46,27 +45,38 @@ class AppointmentAdapter : ListAdapter<Appointments,AppointmentAdapter.ViewHolde
 
 
 
-    class ViewHolder private constructor(val binding: ListItemAppointmentBinding) :RecyclerView.ViewHolder(binding.root){
+        class ViewHolder private constructor(
+            val binding: ListItemAppointmentBinding,
+            private val checkedApptId: MutableLiveData<Int>
+        ) :RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Appointments) {
-//            binding.detailsTextView.text = item.details
-//            binding.dateTextView.text = item.apptDate
-//            binding.timeTextView.text = item.apptTime
+            fun bind(item: Appointments) {
 
-            binding.appointment = item
-            binding.executePendingBindings()// This call is an optimization that asks data binding to execute any
-                                            // pending bindings right away. It's always a good idea to call
-                                            //executePendingBindings() when you use binding adapters in a
-                                            // RecyclerView, because it can slightly speed up sizing the views.
-        }
+                binding.appointment = item
+                // This call is an optimization that asks data binding to execute any
+                // pending bindings right away. It's always a good idea to call
+                // executePendingBindings() when you use binding adapters in a
+                // RecyclerView, because it can slightly speed up sizing the views.
+                binding.executePendingBindings()
+
+                binding.checkBox.setOnClickListener {
+                    checkedApptId.value = item.apptid
+                }
+            }
+
+
 
         companion object {
-             fun from(parent: ViewGroup): ViewHolder {
+             fun from(
+                 parent: ViewGroup,
+                 checkedApptId: MutableLiveData<Int>
+             ): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
 //                val view = layoutInflater.inflate(R.layout.list_item_appointment, parent, false)
 
                  val binding = ListItemAppointmentBinding.inflate(layoutInflater,parent,false)
-                return ViewHolder(binding)
+                 //val binding = ListItemBinding.inflate(layoutInflater,parent,false)
+                 return ViewHolder(binding, checkedApptId)
             }
         }
     }

@@ -32,7 +32,15 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         // Do something with the time chosen by the user
 
         // Step 3. Set a result
-        setFragmentResult(TIME_REQUEST_KEY, bundleOf("time" to "$hourOfDay : $minute"))
+        with(Calendar.getInstance()) {
+            val year = get(Calendar.YEAR)
+            val month = get(Calendar.MONTH)
+            val day = get(Calendar.DAY_OF_MONTH)
+
+            set(year, month, day, hourOfDay, minute)
+
+            setFragmentResult(TIME_REQUEST_KEY, bundleOf("time" to this.timeInMillis))
+        }
 
         // Step 4. Go back to Fragment A
         findNavController().navigateUp()

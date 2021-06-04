@@ -3,7 +3,6 @@ package com.namita.mynotepad.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Time
 import java.util.*
 
 @Entity(tableName = "appointments_tab")
@@ -13,10 +12,10 @@ data class Appointments(
     val apptid: Int = 0,
 
     @ColumnInfo(name = "date")
-    val apptDate: String,
+    val apptDate: Date,
 
     @ColumnInfo(name = "time")
-    val apptTime: String,
+    val apptTime: Date,
 
     @ColumnInfo(name = "description")
     val details: String

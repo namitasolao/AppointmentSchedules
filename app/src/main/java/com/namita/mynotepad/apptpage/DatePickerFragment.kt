@@ -27,9 +27,12 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         // Do something with the date chosen by the user
 
-        setFragmentResult(DATE_REQUEST_KEY,bundleOf("date" to  "$day : ${month+1} : $year"))
+        with(Calendar.getInstance()) {
+            set(year, month, day)
+            setFragmentResult(DATE_REQUEST_KEY,bundleOf("date" to  this.timeInMillis))
 
-        // Step 4. Go back to Fragment A
-        findNavController().navigateUp()
+            // Step 4. Go back to Fragment A
+            findNavController().navigateUp()
+        }
     }
 }

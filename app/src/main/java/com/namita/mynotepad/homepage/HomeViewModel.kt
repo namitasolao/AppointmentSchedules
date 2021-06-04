@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.namita.mynotepad.database.Appointments
 import com.namita.mynotepad.database.AppointmentsDAO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(val database : AppointmentsDAO,
@@ -19,9 +22,19 @@ class HomeViewModel(val database : AppointmentsDAO,
     val appointments : LiveData<List<Appointments>>
         get() = _appointments
 
-//    init{
-//        initializeAppointments()
-//    }
+    val checkedAppointmentId = MutableLiveData<Int>()
+
+    private val checkedAppointments = mutableSetOf<Int>()
+
+    init{
+        checkedAppointmentId.observeForever {
+            if (checkedAppointments.contains(it)) {
+                checkedAppointments.remove(it)
+            } else {
+                checkedAppointments.add(it)
+            }
+        }
+    }
 
     fun initializeAppointments(){
         viewModelScope.launch {
@@ -35,11 +48,18 @@ class HomeViewModel(val database : AppointmentsDAO,
 
 //     appointments.value = getAppointmentsFromDatabase()
 
-    fun onDelete(){
+    fun onDelete() {
+        var checkList: List<Int>
+
         viewModelScope.launch {
-            database.delete()
+            checkedAppointments.forEach {
+                database.deleteAppointment(it)
+            }
         }
+
     }
+
+
 
     fun rowsExist() : Int{
         var count = 0
@@ -48,4 +68,5 @@ class HomeViewModel(val database : AppointmentsDAO,
         }
         return count
     }
+
 }
