@@ -21,6 +21,9 @@ class ApptViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
+    var selectedDate: Long? = null
+    var selectedTime: Long? = null
+
     fun onAdd(
         date: Long?,
         time: Long?,

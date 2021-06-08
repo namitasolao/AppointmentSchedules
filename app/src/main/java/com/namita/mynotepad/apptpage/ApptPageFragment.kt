@@ -30,9 +30,9 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
 
     private lateinit var binding: FragmentApptPageBinding
     private lateinit var viewModel: ApptViewModel
-
-    private var selectedDate: Long? = null
-    private var selectedTime: Long? = null
+//
+//    private var selectedDate: Long? = null
+//    private var selectedTime: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,9 +68,9 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
             }
             okButton.setOnClickListener {
                 val isSuccessful = apptPage?.onAdd(
-                    selectedDate,
+                    viewModel.selectedDate,
                     //Date(dateText.text),
-                    selectedTime,
+                    viewModel.selectedTime,
                     detailsText.text.toString()
                 ) ?: null
 
@@ -83,6 +83,7 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
             }
         }
 
+        resintateState()
 
         return binding.root
     }
@@ -93,19 +94,27 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
         // Step 1. Listen for fragment results
         setFragmentResultListener(TIME_REQUEST_KEY) { key, bundle ->
             bundle["time"]?.let {
-                selectedTime = it as Long
+                viewModel.selectedTime = it as Long
                 binding.timeText.text =DateFormat.format(TIME_FORMAT, Date(it))
             }
         }
 
         setFragmentResultListener(DATE_REQUEST_KEY) { key, bundle ->
             bundle["date"]?.let {
-                selectedDate = it as Long
+                viewModel.selectedDate = it as Long
                 binding.dateText.text = DateFormat.format(DATE_FORMAT, Date(it))
             }
         }
 
     }
 
+    private fun resintateState() {
+        viewModel.selectedDate?.let {
+            binding.dateText.text = DateFormat.format(DATE_FORMAT, Date(it))
+        }
+        viewModel.selectedTime?.let {
+            binding.timeText.text =DateFormat.format(TIME_FORMAT, Date(it))
+        }
+    }
 }
 
