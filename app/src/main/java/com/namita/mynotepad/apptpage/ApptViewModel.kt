@@ -2,6 +2,7 @@ package com.namita.mynotepad.apptpage
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.namita.mynotepad.database.Appointments
@@ -48,8 +49,6 @@ class ApptViewModel(
         } else {
             outputStr = "Enter all values!"
         }
-
-
         return outputStr
     }
 

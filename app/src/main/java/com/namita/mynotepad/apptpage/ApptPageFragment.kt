@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -28,6 +29,7 @@ const val TIME_FORMAT = "hh:mm"
 class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
 
     private lateinit var binding: FragmentApptPageBinding
+    private lateinit var viewModel: ApptViewModel
 
     private var selectedDate: Long? = null
     private var selectedTime: Long? = null
@@ -51,7 +53,9 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
 
         val modelFactory = ApptViewModelFactory(datasource,application)
 
-        binding.apptPage = ViewModelProvider(this,modelFactory).get(ApptViewModel::class.java)
+        viewModel = ViewModelProvider(this,modelFactory).get(ApptViewModel::class.java)
+
+        binding.apptPage = viewModel
 
         binding.lifecycleOwner = this
 
@@ -102,7 +106,6 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
         }
 
     }
-
 
 }
 
