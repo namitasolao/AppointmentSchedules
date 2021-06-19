@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_apptPageFragment_to_datePickerFragment"
             app:destination="@id/datePickerFragment" />
+        <argument
+            android:name="apptId"
+            app:argType="integer" />
     </fragment>
     <dialog
         android:id="@+id/timePickerFragment"

@@ -1,11 +1,13 @@
 package com.namita.mynotepad.apptpage
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
@@ -20,6 +22,7 @@ import java.sql.Time
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.system.measureTimeMillis
 
 const val TIME_REQUEST_KEY = "TIME_REQUEST_KEY"
 const val DATE_REQUEST_KEY = "DATE_REQUEST_KEY"
@@ -80,6 +83,19 @@ class ApptPageFragment : Fragment(R.layout.fragment_appt_page) {
                 } else{
                     Toast.makeText(it.context, isSuccessful, Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+
+        arguments?.let {
+            //val apptId = it["id"]
+            it["date"]?.let { date ->
+                binding.dateText.text = DateFormat.format(DATE_FORMAT,(date as Long))
+            }
+            it["time"]?.let { time ->
+                binding.timeText.text =  DateFormat.format(TIME_FORMAT,(time as Long))
+            }
+            it["details"]?.let { details ->
+                binding.detailsText.setText(details.toString(), TextView.BufferType.EDITABLE)
             }
         }
 

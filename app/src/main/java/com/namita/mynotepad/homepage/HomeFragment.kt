@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 //import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.namita.mynotepad.database.ApptDatabase
 import com.namita.mynotepad.R
 import com.namita.mynotepad.apptpage.ApptViewModelFactory

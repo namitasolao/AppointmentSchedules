@@ -6,6 +6,7 @@ import android.text.format.DateFormat
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.namita.mynotepad.apptpage.DATE_FORMAT
+import com.namita.mynotepad.apptpage.TIME_FORMAT
 import com.namita.mynotepad.database.Appointments
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -20,14 +21,14 @@ class BindingUtils {
         @JvmStatic
         @BindingAdapter("apptTime")
         fun TextView.formatApptTime(item: Appointments) {
-            text = SimpleDateFormat("HH:mm").format(item.apptTime).toString()
+            text = SimpleDateFormat(TIME_FORMAT).format(item.apptTime).toString()
         }
 
         @SuppressLint("SimpleDateFormat")
         @JvmStatic
         @BindingAdapter("apptDate")
         fun TextView.formatApptDate(item: Appointments) {
-            text = SimpleDateFormat("EEEE MMM-dd-yyyy")
+            text = SimpleDateFormat(DATE_FORMAT)
               .format(item.apptDate)
 
             //text = LocalDate.parse(item.apptDate, DateTimeFormatter.ISO_DATE).toString()

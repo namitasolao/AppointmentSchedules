@@ -2,14 +2,17 @@ package com.namita.mynotepad.homepage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.namita.mynotepad.R
 //import com.namita.mynotepad.TextItemViewHolder
 import com.namita.mynotepad.database.Appointments
 import com.namita.mynotepad.databinding.ListItemAppointmentBinding
-import com.namita.mynotepad.databinding.ListItemBinding
 
 class AppointmentAdapter(
     private val checkedApptId: MutableLiveData<Int>
@@ -50,7 +53,18 @@ class AppointmentAdapter(
             private val checkedApptId: MutableLiveData<Int>
         ) :RecyclerView.ViewHolder(binding.root){
 
+
+
             fun bind(item: Appointments) {
+
+                binding.detailsTextView.setOnClickListener {
+                    val bundle = bundleOf("id" to item.apptid,
+                        "details" to item.details,
+                        "date" to item.apptDate.time,
+                        "time" to item.apptTime.time)
+
+                    Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_apptPageFragment, bundle)
+                }
 
                 binding.appointment = item
                 // This call is an optimization that asks data binding to execute any
@@ -62,6 +76,8 @@ class AppointmentAdapter(
                 binding.checkBox.setOnClickListener {
                     checkedApptId.value = item.apptid
                 }
+
+
             }
 
 
